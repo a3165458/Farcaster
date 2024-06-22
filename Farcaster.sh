@@ -99,8 +99,8 @@ function install_node() {
 
 # 查看节点日志
 function check_service_status() {
-    cd $HOME/hubble
-    docker compose logs -f --tail 20
+    cd $HOME
+    /root/hubble/hubble.sh logs
 }
 
 # 主菜单
