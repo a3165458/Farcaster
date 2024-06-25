@@ -103,6 +103,25 @@ function check_service_status() {
     /root/hubble/hubble.sh logs
 }
 
+function uninstall_node() {
+    echo "你确定要卸载Farcaster节点程序吗？这将会删除所有相关的数据。[Y/N]"
+    read -r -p "请确认: " response
+
+    case "$response" in
+        [yY][eE][sS]|[yY]) 
+            echo "开始卸载节点程序..."
+            cd ~
+            cd hubble
+            docker compose down -v
+            rm -rf hubble
+            echo "节点程序卸载完成。"
+            ;;
+        *)
+            echo "取消卸载操作。"
+            ;;
+    esac
+}
+
 # 主菜单
 function main_menu() {
     clear
@@ -112,11 +131,13 @@ function main_menu() {
     echo "请选择要执行的操作:"
     echo "1. 安装节点"
     echo "2. 查看节点日志"
-    read -p "请输入选项（1-2）: " OPTION
+    echo "3. 卸载节点"
+    read -p "请输入选项（1-3）: " OPTION
 
     case $OPTION in
     1) install_node ;;
     2) check_service_status ;;
+    3) uninstall_node ;;
     *) echo "无效选项。" ;;
     esac
 }
